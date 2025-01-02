@@ -19,20 +19,21 @@ int main(int argc, char *argv[]) {
 	};
 	int n=10;
 	int choice;
-	choose();
-	printf("Enter The Choice: ");
-    scanf("%d",&choice);
-	if(choice==1){
-		login();
-		menu();
-		printf("Enter The Choice: ");
-	   	scanf("%d",&choice);
-	}else if(choice==0){
-		printf("========= Thank You =========\n");
-		printf("========= See You Soon =========\n");
-	}	
 	char select;
+	
 	do{
+		choose();
+		printf("Enter The Choice: ");
+		scanf("%d",&choice);
+		if(choice==1){
+			login();
+			menu();
+			printf("Enter The Choice: ");
+			scanf("%d",&choice);
+		}else if(choice==0){
+			printf("========= Thank You =========\n");
+			printf("========= See You Soon =========\n");
+		}	
 		switch(choice){
 			case 1:
 				printList(books,n);
@@ -109,7 +110,7 @@ int main(int argc, char *argv[]) {
 					continue;
 				}
 				break;
-			case 8:
+			case 7:
 				printf("========= Thank You =========\n");
 				printf("========= See You Soon =========\n");
 				break;

@@ -27,8 +27,8 @@ void login(){
 	scanf("%s",&password);
     printf("      ==========================\n");
     while(strcmp(email,"admin123@gmail.com")!=0||strcmp(password,"admin2508@")!=0){
-    	printf("email hoac mat khau khong dung");
     	system("cls");
+		printf("email hoac mat khau khong dung");
     	printf("      Email: ");
 		scanf("%s",&email);
 		getchar();
@@ -47,7 +47,7 @@ void menu(){
 	printf("      [4] Xoa sach\n");
 	printf("      [5] Tim kiem sach\n");
 	printf("      [6] Sap xep sach\n");
-	printf("      [0] Thoat\n");
+	printf("      [7] Thoat\n");
     printf("      ==========================\n");
 }
 void printList(struct Book book[], int n){
@@ -107,19 +107,25 @@ void addBook(struct Book book[],  int *n){
 	system("cls");
 	int addIndex;
 	printf("\t\t**** Add A New Book ****\n");
-	printf("Nhap vi tri muon them sach: ",*n+1);
+	printf("Enter The ID: ",*n+1);
 	scanf("%d",&addIndex);
-	while (addIndex < 1 || addIndex > *n + 1) {
-        printf("Vi tri khong hop le!\n");
-        printf("Nhap vi tri muon them sach: ",*n+1);
+	while(addIndex >= 1&&addIndex <= *n) {
+        printf("This ID is already exists\n");
+        printf("Enter The ID: ",*n+1);
         scanf("%d", &addIndex);
     }
+    while(addIndex<1){
+    	printf("Invalid ID");
+    	printf("Enter The ID: ",*n+1);
+        scanf("%d", &addIndex);
+	}
 	for (int i = *n; i >= addIndex; i--) { 
 		book[i] = book[i - 1];	
 	}
-	getchar();
+	book[addIndex-1].bookId=addIndex;
 	while(1){
-		printf("Moi ban nhap vao ten sach: ");
+	getchar();
+		printf("Moi ban nhap ten sach: ");
 		fgets(book[addIndex-1].title, 30, stdin);
 		book[addIndex-1].title[strcspn(book[addIndex-1].title, "\n")] = '\0';
 		if(isEmpty(book[addIndex-1].title)){
@@ -166,17 +172,13 @@ void addBook(struct Book book[],  int *n){
 	scanf(" %d",&book[addIndex-1].publication.month);
 	printf("Nam: ");
 	scanf(" %d",&book[addIndex-1].publication.year);
-	book[addIndex-1].bookId=addIndex;
-	for(int i=addIndex;i<*n+1;i++){
-		book[i].bookId=i+1;
-	}
 	(*n)++;
 	printf("Them sach thanh cong!\n");
 }
 void updateBook(struct Book book[], int n){
 	system("cls");
 	int position;
-	printf("Moi ban nhap vao vi tri muon update: ");
+	printf("Moi ban nhap vao id muon update: ");
 	scanf("%d", &position);
 	int findIndex=-1;
 	for(int i=0;i<n;i++){
@@ -187,7 +189,7 @@ void updateBook(struct Book book[], int n){
 	} 
 	while(findIndex==-1){
 		printf("Khong tim thay sach de update \n");
-		printf("Hay nha lai vi tri ban muon sua sach: ");
+		printf("Hay nhap lai id ban muon sua sach: ");
 		scanf("%d",&position);
 		for(int i=0;i<n;i++){
 			if(book[i].bookId==position){
@@ -263,7 +265,7 @@ void deleteBook(struct Book book[],  int *n){
 	char rightWrong;
 	int position;
 	printf("\t\t**** Delete a Book ****\n");
-	printf("Moi ban nhap vao vi tri muon xoa: ");
+	printf("Moi ban nhap vao id muon xoa: ");
 	scanf("%d", &position);
 	int findIndex=-1;
 	for(int i=0;i<*n;i++){
@@ -273,18 +275,18 @@ void deleteBook(struct Book book[],  int *n){
 		}
 	} 
 	if(findIndex==-1){
-		printf("Khong tim thay sach de xoa");
+		printf("Khong tim thay sach de xoa\n");
 		return ;
 	}else{
-	printf(" One Book Found For ID: %d\n\n",book[position-1].bookId);
+	printf(" One Book Found For ID: %d\n\n",book[findIndex].bookId);
 	printf(" Book Informations\n");
 	printf("------------------------\n");
-	printf("ID: %d\n",book[position-1].bookId);
-	printf("bookName: %s\n",book[position-1].title);
-	printf("Author: %s\n",book[position-1].author);
-	printf("Quantity: %d\n",book[position-1].quantity);
-	printf("Price: %.2f\n",book[position-1].price);
-	printf("Publication: %d/%d/%d\n",book[position-1].publication.day,book[position-1].publication.month,book[position-1].publication.year);
+	printf("ID: %d\n",book[findIndex].bookId);
+	printf("bookName: %s\n",book[findIndex].title);
+	printf("Author: %s\n",book[findIndex].author);
+	printf("Quantity: %d\n",book[findIndex].quantity);
+	printf("Price: %.2f\n",book[findIndex].price);
+	printf("Publication: %d/%d/%d\n",book[findIndex].publication.day,book[findIndex].publication.month,book[findIndex].publication.year);
 	printf("Are you sure want to delete this student?(Y/N): ");
 		selection(&rightWrong);
 		if (rightWrong == 'Y'){
