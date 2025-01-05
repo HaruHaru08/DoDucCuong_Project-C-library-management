@@ -18,3 +18,7 @@ struct member{
 	bool status;
 	struct Book BorrowedBooks[];
 };
+struct Admin{
+	char emailAdmin[50];
+	char passwordAdmin[50];
+};

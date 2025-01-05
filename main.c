@@ -17,107 +17,157 @@ int main(int argc, char *argv[]) {
     {9, "7 Vien Ngoc Rong", "Akira Toriyama",45, 5.00, {1, 11, 1984}},
     {10, "One Piece", "Eiichiro Oda",40, 5.00, {22, 7, 1997}},
 	};
+	saveBooksToFile(books,10);
+	struct member members[100];
+	struct Admin admin={"admin123@gmail.com","admin2508@"};
+	saveAdminToFile(&admin);
+	int totalMembers = 0;
 	int n=10;
 	int choice;
+	int choiceMember;
+	int choiceMenu;	
 	char select;
-	
-	do{
-		choose();
+	int isRunning = 1;
+	login();
+	while (isRunning) {
+        choose();;
+        int choice;
 		printf("Enter The Choice: ");
 		scanf("%d",&choice);
-		if(choice==1){
-			login();
-			menu();
-			printf("Enter The Choice: ");
-			scanf("%d",&choice);
-		}else if(choice==0){
-			printf("========= Thank You =========\n");
-			printf("========= See You Soon =========\n");
-		}	
-		switch(choice){
-			case 1:
-				printList(books,n);
-				getValidSelection(&select);
-				if(select== '0'){
-					printf("========= Thank You =========\n");
-					printf("========= See You Soon =========\n");
-						return 1;
-				}else if(select== 'b'){
-					continue;
-				}
+        switch (choice) {
+            case 1:
+				do{
+					menuBook();
+					printf("Enter The Choice: ");
+					scanf("%d",&choiceMenu);
+					switch(choice){
+						case 1:
+							printList(books,n);
+							getValidSelection(&select);
+							if(select== '0'){
+								printf("========= Thank You =========\n");
+								printf("========= See You Soon =========\n");
+									return 1;
+							}else if(select== 'b'){
+								continue;
+							}
+							break;
+						case 2:
+							addBook(books, &n);
+							getValidSelection(&select);
+							if(select== '0'){
+								printf("========= Thank You =========\n");
+								printf("========= See You Soon =========\n");
+									return 1;
+							}else if(select== 'b'){
+								continue;
+							}
+							break;
+						case 3:
+							updateBook(books,n);
+							getValidSelection(&select);
+							if(select== '0'){
+								
+								printf("========= Thank You =========\n");
+								printf("========= See You Soon =========\n");
+									return 1;
+							}else if(select== 'b'){
+								continue;
+							}
+							break;
+						case 4:
+							deleteBook(books,&n);
+							getValidSelection(&select);
+							if(select== '0'){
+							printf("========= Thank You =========\n");
+							printf("========= See You Soon =========\n");
+								return 1;
+							}else if(select== 'b'){
+								continue;
+							}
+							break;
+						case 5:
+							search(books,n);
+							getValidSelection(&select);
+							if(select== '0'){
+							printf("========= Thank You =========\n");
+							printf("========= See You Soon =========\n");
+								return 1;
+							}else if(select== 'b'){
+								continue;
+							}
+							break;
+						case 6:
+							menuIncreaseDecrease();
+							printf("Enter The Choice: ");
+				    		scanf("%d",&choiceMenu);
+				    		if(choice==1){
+				    			arrangeDetention(books,n);
+							}
+							if(choice==2){
+								funeralArrangements(books,n);
+							}
+							getValidSelection(&select);
+							if(select== '0'){
+							printf("========= Thank You =========\n");
+							printf("========= See You Soon =========\n");
+								return 1;
+							}else if(select== 'b'){
+								continue;
+							}
+							break;
+						case 7:
+							printf("========= Thank You =========\n");
+							printf("========= See You Soon =========\n");
+							break;
+						default:
+							printf("Lua chon khong hop le xin hay nhap lai");
+							break;
+					}
+				}while(choice!=0);
 				break;
 			case 2:
-				addBook(books, &n);
-				getValidSelection(&select);
-				if(select== '0'){
-					printf("========= Thank You =========\n");
-					printf("========= See You Soon =========\n");
-						return 1;
-				}else if(select== 'b'){
-					continue;
-				}
-				break;
-			case 3:
-				updateBook(books,n);
-				getValidSelection(&select);
-				if(select== '0'){
-					
-					printf("========= Thank You =========\n");
-					printf("========= See You Soon =========\n");
-						return 1;
-				}else if(select== 'b'){
-					continue;
-				}
-				break;
-			case 4:
-				deleteBook(books,&n);
-				getValidSelection(&select);
-				if(select== '0'){
+				do{
+					memberMenu(); 
+					printf("Enter The Choice: ");
+					scanf("%d",&choiceMember);
+					switch(choiceMember){
+					case 1:
+						displayMembers(members,totalMembers);
+						break;
+					case 2:
+						
+						break;
+					case 3:
+						
+						break;
+					case 4:
+						
+						break;
+					case 5:
+						
+						break;
+					case 6:
+						
+						break;
+					case 7:
+						
+						break;
+					case 8:
+						printf("========= Thank You =========\n");
+						printf("========= See You Soon =========\n");
+						break;
+					default:
+						printf("Lua chon khong hop le!");
+						break;
+					}
+				}while(choiceMember!=8);
+			case 0:
+				isRunning = 0;
 				printf("========= Thank You =========\n");
 				printf("========= See You Soon =========\n");
-					return 1;
-				}else if(select== 'b'){
-					continue;
-				}
-				break;
-			case 5:
-				search(books,n);
-				getValidSelection(&select);
-				if(select== '0'){
-				printf("========= Thank You =========\n");
-				printf("========= See You Soon =========\n");
-					return 1;
-				}else if(select== 'b'){
-					continue;
-				}
-				break;
-			case 6:
-				menuIncreaseDecrease();
-				printf("Enter The Choice: ");
-	    		scanf("%d",&choice);
-	    		if(choice==1){
-	    			arrangeDetention(books,n);
-				}
-				if(choice==2){
-					funeralArrangements(books,n);
-				}
-				getValidSelection(&select);
-				if(select== '0'){
-				printf("========= Thank You =========\n");
-				printf("========= See You Soon =========\n");
-					return 1;
-				}else if(select== 'b'){
-					continue;
-				}
-				break;
-			case 7:
-				printf("========= Thank You =========\n");
-				printf("========= See You Soon =========\n");
-				break;
-			default:
-				printf("Lua chon khong hop le xin hay nhap lai");
 				break;
 		}
-	}while(choice!=0);
+	}			
 	return 0;
 }
