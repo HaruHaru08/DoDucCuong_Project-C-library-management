@@ -54,6 +54,7 @@ void menuBook(){
     printf("      ==========================\n");
 }
 void memberMenu() {
+	printf("Moi lam case 1");
     printf("=========================================\n");
     printf("               Member Menu               \n");
     printf("=========================================\n");
@@ -62,7 +63,7 @@ void memberMenu() {
     printf("3. Sua thong tin khach hang\n");
     printf("4. Khoa/Mo khoa khach hang\n");
     printf("5. Tim kiem khach hang theo ten\n");
-    printf("6. Cho mượn sách\n");
+    printf("6. Cho muon sach\n");
     printf("7. Tra lai sach đa muon\n");
     printf("8. Quay lai menu chinh\n");
     printf("=========================================\n");
@@ -172,7 +173,7 @@ void addBook(struct Book book[],  int *n){
         fgets(book[addIndex - 1].title, 30, stdin);
         book[addIndex - 1].title[strcspn(book[addIndex - 1].title, "\n")] = '\0';
         if (isEmpty(book[addIndex - 1].title)) {
-            printf("Ten sach khong duoc de trong! Vui long nhap lai di a!");
+            printf("Ten sach khong duoc de trong! Vui long nhap lai di a!\n");
         } else if (isDuplicase(book, *n, book[addIndex - 1].title)) {
             printf("Ten sach da ton tai! Hay nhap lai di a!\n");
         } else if (strlen(book[addIndex - 1].title) > 30) {
@@ -362,32 +363,30 @@ void search(struct Book book[], int n){
 	char search[30];
 	printf("\t\t**** Search a Book ****\n");
 	printf("Nhap ten cuon sach muon tim: ");
-	fgets(search,50,stdin);
-	search[strcspn(search, "\n")]='\0';
-	for(int i=0;i<n;i++){
-		if(strstr(search,book[i].title)!=NULL){
-			check=i+1;
-		}
-	}
-	if(check>0){
-		printf("\t******************************************\n");
-    	printf("\t*************** Book List ****************\n");
-   		printf("\t******************************************\n");
-    	printf("|============|===========================|======================|============|============|=================|\n");
-    	printf("|   BookID   |           Name            |        AUTHOR        |  QUANTITY  |    PRICE   |   PUBLICATION   |\n");
-    	printf("|============|===========================|======================|============|============|=================|\n");
-    	printf("| %-10d | %-25s | %-20s | %-10d | %-10.2f | %02d/%02d/%04d      |\n", 
-               book[check-1].bookId, 
-               book[check-1].title, 
-               book[check-1].author, 
-               book[check-1].quantity, 
-               book[check-1].price, 
-               book[check-1].publication.day, 
-               book[check-1].publication.month, 
-               book[check-1].publication.year);
-        printf("|------------|---------------------------|----------------------|------------|------------|-----------------|\n");
-    }else{
-    	printf("Khong tim thay quyen sach muon tim!");
+	scanf("%s",&search);
+ printf("\t******************************************\n");
+    printf("\t*************** Book List ****************\n");
+    printf("\t******************************************\n");
+    printf("|============|===========================|======================|============|============|=================|\n");
+    printf("|   BookID   |           Name            |        AUTHOR        |  QUANTITY  |    PRICE   |   PUBLICATION   |\n");
+    printf("|============|===========================|======================|============|============|=================|\n");
+	for(int i = 0; i < n; i++) { 
+		if(strstr(book[i].title, search) != NULL) { 
+			check=1; 
+			printf("| %-10d | %-25s | %-20s | %-10d | %-10.2f | %02d/%02d/%04d      |\n", 
+               book[i].bookId, 
+               book[i].title, 
+               book[i].author, 
+               book[i].quantity, 
+               book[i].price, 
+               book[i].publication.day, 
+               book[i].publication.month, 
+               book[i].publication.year);
+			printf("|------------|---------------------------|----------------------|------------|------------|-----------------|\n"); 
+			} 
+		} 
+	if(check==0) { 
+		printf("Book not found!\n"); 
 	}
 }
 void arrangeDetention(struct Book book[],int n){

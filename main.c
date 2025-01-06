@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 					switch(choiceMenu){
 						case 1:
 							loadBooksFromFile(books,&n);
-							printList(books,n);
+//							printList(books,n);
 							getValidSelection(&select);
 							if(select== '0'){
 								printf("========= Thank You =========\n");
