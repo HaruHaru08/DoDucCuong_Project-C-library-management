@@ -20,24 +20,23 @@ void login(){
 	char password[100];
 	char adminEmail[] = "admin123@gmail.com";
 	char adminPassword[] = "admin2508@";
-	printf("***Library Management System Using C***\n\n");
-	printf("                LOGIN\n");
-	printf("      ==========================\n");
-	printf("      Email(admin123@gmail.com): ");
-	scanf("%s",&email);
-	getchar();
-	printf("      Password(admin2508@): ");
-	scanf("%s",&password);
-    printf("      ==========================\n");
-    while(strcmp(email,"admin123@gmail.com")!=0||strcmp(password,"admin2508@")!=0){
-    	system("cls");
-		printf("email hoac mat khau khong dung");
-    	printf("      Email: ");
+    do{
+		printf("***Library Management System Using C***\n\n");
+		printf("                LOGIN\n");
+		printf("      ==========================\n");
+		printf("      Email(admin123@gmail.com): ");
 		scanf("%s",&email);
 		getchar();
-		printf("      Password: ");
+		printf("      Password(admin2508@): ");
 		scanf("%s",&password);
-	}
+		printf("      ==========================\n");
+		if(strcmp(email,"admin123@gmail.com")!=0||strcmp(password,"admin2508@")!=0){
+			system("cls");
+		    printf("Email or Password is wrong\n");
+		}else{
+			break;
+		}
+	}while(1);
 }
 void menuBook(){	
 	system("cls");
@@ -89,7 +88,6 @@ void printList(struct Book book[], int n){
                book[i].publication.year);
         printf("|------------|---------------------------|----------------------|------------|------------|-----------------|\n");
     }
-
 }
 char getValidSelection(char *select){
 	printf("Go back(b)? or Exit(0)?: ");
@@ -228,6 +226,24 @@ void addBook(struct Book book[],  int *n){
 }
 void updateBook(struct Book book[], int n){
 	system("cls");
+	printf("\t******************************************\n");
+    printf("\t*************** Book List ****************\n");
+    printf("\t******************************************\n");
+    printf("|============|===========================|======================|============|============|=================|\n");
+    printf("|   BookID   |           Name            |        AUTHOR        |  QUANTITY  |    PRICE   |   PUBLICATION   |\n");
+    printf("|============|===========================|======================|============|============|=================|\n");
+    for (int i = 0; i < n; i++) {
+        printf("| %-10d | %-25s | %-20s | %-10d | %-10.2f | %02d/%02d/%04d      |\n",
+               book[i].bookId, 
+               book[i].title, 
+               book[i].author, 
+               book[i].quantity, 
+               book[i].price, 
+               book[i].publication.day, 
+               book[i].publication.month, 
+               book[i].publication.year);
+        printf("|------------|---------------------------|----------------------|------------|------------|-----------------|\n");
+    	}
 	int position;
 	printf("Moi ban nhap vao id muon update: ");
 	scanf("%d", &position);
