@@ -23,10 +23,10 @@ void login(){
 	printf("***Library Management System Using C***\n\n");
 	printf("                LOGIN\n");
 	printf("      ==========================\n");
-	printf("      Email: ");
+	printf("      Email(admin123@gmail.com): ");
 	scanf("%s",&email);
 	getchar();
-	printf("      Password: ");
+	printf("      Password(admin2508@): ");
 	scanf("%s",&password);
     printf("      ==========================\n");
     while(strcmp(email,"admin123@gmail.com")!=0||strcmp(password,"admin2508@")!=0){
