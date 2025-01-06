@@ -26,3 +26,8 @@ void loadBooksFromFile(struct Book book[],int*n);
 void saveAdminToFile();
 void loadAdminFromBinaryFile();
 void displayMembers(struct member members[],int totalMembers);
+void addMember(struct member members[],int *totalMembers);
+void editMember(struct member members[],int totalMembers);
+void searchMemberByName(struct member members[],int totalMembers);
+void saveMemberToFile(struct member members[],int totalMembers);
+void loadMemberFromFile(struct member members[],int *totalMembers);

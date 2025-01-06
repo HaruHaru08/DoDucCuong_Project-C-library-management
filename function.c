@@ -53,20 +53,17 @@ void menuBook(){
     printf("      ==========================\n");
 }
 void memberMenu() {
-	printf("Moi lam case 1");
+	system("cls");
+	printf("Moi lam case 1\n");
     printf("=========================================\n");
     printf("               Member Menu               \n");
     printf("=========================================\n");
     printf("1. Hien thi danh sach khach hang\n");
     printf("2. Them khach hang\n");
     printf("3. Sua thong tin khach hang\n");
-    printf("4. Khoa/Mo khoa khach hang\n");
-    printf("5. Tim kiem khach hang theo ten\n");
-    printf("6. Cho muon sach\n");
-    printf("7. Tra lai sach đa muon\n");
-    printf("8. Quay lai menu chinh\n");
+    printf("4. Tim kiem khach hang theo ten\n");
+    printf("5. Quay lai menu chinh\n");
     printf("=========================================\n");
-    printf("Nhap lua chon cua ban: ");
 }
 void printList(struct Book book[], int n){
 	system("cls");
@@ -497,17 +494,12 @@ void saveAdminToFile(struct Admin *admin) {
     printf("Luu thong tin admin vao file thanh cong!\n");
 }
 void displayMembers(struct member members[],int totalMembers) {
-//    printf("\nMember List\n");
-//    printf("%-10s %-20s %-10s %-10s\n", "Member ID", "Name", "Phone", "Status");
-//    for (int i = 0; i < memberCount; i++) {
-//        printf("%-10s %-20s %-10s %-10s\n", members[i].memberId, members[i].name, members[i].phone, members[i].status ? "Active" : "Locked");
-//    }
 	system("cls");
     printf("\t******************************************\n");
     printf("\t*************** Member List ****************\n");
     printf("\t******************************************\n");
-    printf("|============|===========================|======================|============||\n");
-    printf("| Member ID  |           Name            |       Phone       	|  Status  	 |\n");
+    printf("|============|===========================|======================|============|\n");
+    printf("| Member ID  |           Name            |       Phone       	|   Status   |\n");
     printf("|============|===========================|======================|============|\n");
     for (int i = 0; i < totalMembers; i++) {
         printf("| %-10s | %-25s | %-20s | %-10s |\n", 
@@ -517,4 +509,128 @@ void displayMembers(struct member members[],int totalMembers) {
 			  members[i].status ? "Active" : "Locked");
         printf("|------------|---------------------------|----------------------|------------|\n");
     }
+}
+void addMember(struct member members[],int *totalMembers) {
+	system("cls");
+    if (*totalMembers >= 100) {
+        printf("Cannot add member, list is full!\n");
+        return;
+    }
+    struct member newMember;
+    printf("Enter Member ID: ");
+    getchar();
+    fgets(newMember.memberId, sizeof(newMember.memberId), stdin);
+    newMember.memberId[strcspn(newMember.memberId, "\n")] = 0;
+    for (int i = 0; i < *totalMembers; i++) {
+        if (strcmp(members[i].memberId, newMember.memberId) == 0) {
+            printf("ID already exists!\n");
+            return;
+        }
+    }
+    printf("Enter name: ");
+    fgets(newMember.name, sizeof(newMember.name), stdin);
+    newMember.name[strcspn(newMember.name, "\n")] = 0;
+    printf("Enter phone number: ");
+    fgets(newMember.phone, sizeof(newMember.phone), stdin);
+    newMember.phone[strcspn(newMember.phone, "\n")] = 0;
+    newMember.status = 0;
+    newMember.borrowedCount = 0;
+    members[*totalMembers] = newMember;
+    (*totalMembers)++;
+    printf("Member added successfully!\n");
+}
+void editMember(struct member members[],int totalMembers) {
+    char memberId[10];
+    printf("Enter the Member ID to edit: ");
+    fgets(memberId, sizeof(memberId), stdin);
+    memberId[strcspn(memberId, "\n")] = 0;
+    for (int i = 0; i < totalMembers; i++) {
+        if (strcmp(members[i].memberId, memberId) == 0) {
+            printf("Current information:\n");
+            printf("Name: %s, Phone: %s, Status: %s\n",
+                   members[i].name,
+                   members[i].phone,
+                   members[i].status ? "Locked" : "Unlocked");
+            printf("Enter new name: ");
+            fgets(members[i].name, sizeof(members[i].name), stdin);
+            members[i].name[strcspn(members[i].name, "\n")] = 0;
+
+            printf("Enter new phone number: ");
+            fgets(members[i].phone, sizeof(members[i].phone), stdin);
+            members[i].phone[strcspn(members[i].phone, "\n")] = 0;
+
+            printf("Member information updated successfully!\n");
+            return;
+        }
+    }
+    printf("Member with the entered ID was not found!\n");
+}
+void searchMemberByName(struct member members[],int totalMembers) {
+	system("cls");
+    char name[20];
+    printf("Enter the name to search: ");
+    fgets(name, sizeof(name), stdin);
+    name[strcspn(name, "\n")] = 0;
+    int found = 0;
+    printf("\t******************************************\n");
+    printf("\t*************** Member List ****************\n");
+    printf("\t******************************************\n");
+    printf("|============|===========================|======================|============|==========|\n");
+    printf("| Member ID  |           Name            |       Phone       	|   Status   | Borrowed |\n");
+    printf("|============|===========================|======================|============|==========|\n");
+    for (int i = 0; i < totalMembers; i++) {
+    	if (strstr(members[i].name, name) != NULL) {
+	        printf("| %-10s | %-25s | %-20s | %-10s | %-10d |\n", 
+	              members[i].memberId, 
+				  members[i].name, 
+				  members[i].phone, 
+				  members[i].status ? "Active" : "Locked",
+				  members[i].borrowedCount);
+			found=1;
+		}
+        printf("|------------|---------------------------|----------------------|------------|\n");
+    }
+    if (found==0) {
+        printf("No members found with the name '%s'.\n", name);
+    }
+}
+void saveMemberToFile(struct member members[],int totalMembers) {
+    FILE *file = fopen("memberList.bin", "wb");
+    if (file == NULL) {
+        printf("Error opening file for saving.\n");
+        return;
+    } 
+    fwrite(members, sizeof(struct member),totalMembers, file);  
+    fclose(file);
+    printf("Data saved to file successfully.\n");
+}
+void loadMemberFromFile(struct member members[],int *totalMembers) {
+    FILE *file = fopen("memberList.bin", "rb");
+    if (file == NULL) {
+        printf("No existing data file found.\n");
+        return;
+    } 
+    *totalMembers=fread(members, sizeof(struct member), 100, file);
+    if (*totalMembers <= 0) {
+        printf("Khong co du lieu trong file\n");
+        fclose(file);
+        return;
+    }
+    system("cls");
+    printf("\t******************************************\n");
+    printf("\t*************** Member List ****************\n");
+    printf("\t******************************************\n");
+    printf("|============|===========================|======================|============|\n");
+    printf("| Member ID  |           Name            |       Phone       	|   Status   |\n");
+    printf("|============|===========================|======================|============|\n");
+    for (int i = 0; i < *totalMembers; i++) {
+        printf("| %-10s | %-25s | %-20s | %-10s |\n", 
+              members[i].memberId, 
+			  members[i].name, 
+			  members[i].phone, 
+			  members[i].status ? "Active" : "Locked");
+        printf("|------------|---------------------------|----------------------|------------|\n");
+    }
+    fclose(file);
+    printf("Data loaded from file successfully.\n");
 }

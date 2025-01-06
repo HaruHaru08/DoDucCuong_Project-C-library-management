@@ -138,27 +138,56 @@ int main(int argc, char *argv[]) {
 					scanf("%d",&choiceMember);
 					switch(choiceMember){
 					case 1:
-						displayMembers(members,totalMembers);
+//						displayMembers(members,totalMembers);
+						if(totalMembers==0){
+							printf("Chua co du lieu!Hay di them du lieu vao di a.");
+						}
+						loadMemberFromFile(members,&totalMembers);
+						getValidSelection(&select);
+							if(select== '0'){
+								printf("========= Thank You =========\n");
+								printf("========= See You Soon =========\n");
+									return 1;
+							}else if(select== 'b'){
+								continue;
+							}
 						break;
 					case 2:
-						
+						addMember(members,&totalMembers);
+						saveMemberToFile(members,totalMembers);
+						getValidSelection(&select);
+							if(select== '0'){
+								printf("========= Thank You =========\n");
+								printf("========= See You Soon =========\n");
+									return 1;
+							}else if(select== 'b'){
+								continue;
+							}
 						break;
 					case 3:
-						
+						editMember(members,totalMembers);
+						saveMemberToFile(members,totalMembers);
+						getValidSelection(&select);
+							if(select== '0'){
+								printf("========= Thank You =========\n");
+								printf("========= See You Soon =========\n");
+									return 1;
+							}else if(select== 'b'){
+								continue;
+							}
 						break;
 					case 4:
-						
+						searchMemberByName(members,totalMembers);
+						getValidSelection(&select);
+							if(select== '0'){
+								printf("========= Thank You =========\n");
+								printf("========= See You Soon =========\n");
+									return 1;
+							}else if(select== 'b'){
+								continue;
+							}
 						break;
 					case 5:
-						
-						break;
-					case 6:
-						
-						break;
-					case 7:
-						
-						break;
-					case 8:
 						printf("========= Thank You =========\n");
 						printf("========= See You Soon =========\n");
 						break;
@@ -166,7 +195,7 @@ int main(int argc, char *argv[]) {
 						printf("Lua chon khong hop le!");
 						break;
 					}
-				}while(choiceMember!=8);
+				}while(choiceMember!=5);
 			case 0:
 				isRunning = 0;
 				printf("========= Thank You =========\n");

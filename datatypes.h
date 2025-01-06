@@ -16,6 +16,7 @@ struct member{
 	char name[20];
 	char phone[10];
 	bool status;
+	int borrowedCount;
 	struct Book BorrowedBooks[];
 };
 struct Admin{
