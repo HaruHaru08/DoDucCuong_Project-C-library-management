@@ -54,7 +54,6 @@ void menuBook(){
 }
 void memberMenu() {
 	system("cls");
-	printf("Moi lam case 1\n");
     printf("=========================================\n");
     printf("               Member Menu               \n");
     printf("=========================================\n");
